@@ -25,7 +25,7 @@ from vizpool.utils import interactive
 # Contributing
 Yes, Please!  I believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so lets make it more efficient, let go with low-code!!
 
-Follow the instructions on the `vizpoolQuickStart` [example file](https://github.com/Hassi34/vizpool/blob/main/vizpoolQuickStart.ipynb) to get up and running, or follow along below!
+Follow the instructions on the `vizpoolQuickStart` [example file](https://github.com/Hassi34/vizpool/blob/master/vizpoolQuickStart.ipynb) to get up and running, or follow along below!
 
 ### Quickstart
 

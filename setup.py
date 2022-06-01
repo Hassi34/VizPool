@@ -8,10 +8,10 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
-    version="0.0.5",
+    version="0.0.6",
     author= USERNAME,
     author_email="hasnainmehmood3435@gmail.com",
-    description="A highlevel python API with low-code support for Data Visualization",
+    description="A high-level python API with low-code support for Data Visualization",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=f"https://github.com/{USERNAME}/{PROJECT_NAME}",
