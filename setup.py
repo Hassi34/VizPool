@@ -28,6 +28,6 @@ setuptools.setup(
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.7",
     install_requires = [
-        "plotly<=5.8.0"
+        "plotly >= 5.8.0"
     ]
 )   
