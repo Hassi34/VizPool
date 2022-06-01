@@ -6,7 +6,6 @@ with open("README.md", "r", encoding="utf-8") as fh:
 PROJECT_NAME = "vizpool"
 USERNAME = "Hassi34"
 
-
 setuptools.setup(
     name=f"{PROJECT_NAME}",
     version="0.0.3",
