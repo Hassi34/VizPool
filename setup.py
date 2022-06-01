@@ -12,7 +12,7 @@ setuptools.setup(
     version="0.0.2",
     author= USERNAME,
     author_email="hasnainmehmood3435@gmail.com",
-    description="This is a hgih level API for data visualization. It provides the static and interactive vi",
+    description="A highlevel python API with low-code support for Data Visualization",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=f"https://github.com/{USERNAME}/{PROJECT_NAME}",
