@@ -9,7 +9,7 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
-    version="0.0.1",
+    version="0.0.2",
     author= USERNAME,
     author_email="hasnainmehmood3435@gmail.com",
     description="This is a hgih level API for data visualization. It provides the static and interactive vi",
