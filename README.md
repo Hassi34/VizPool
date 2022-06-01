@@ -14,11 +14,11 @@ pip install vizpool
 
 ### Usage
 import the components and use it like any other python package
-*Static Visuals
+* Static Visuals
 ```bash
 from vizpool.utils import static
 ```
-*Interactive Visuals
+* Interactive Visuals
 ```bash
 from vizpool.utils import interactive
 ```
@@ -29,12 +29,12 @@ Follow the instructions on the `vizpoolQuickStart` [example file](https://github
 
 ### Quickstart
 
-* Ensure you have [Python 3.7+](https://www.python.org/downloads/)installed.
+* Ensure you have [Python 3.7+](https://www.python.org/downloads/) installed.
 
 * Create a new Python conda environment for the vizpool:
 
 ```
-$ cd vizpool
+
 $ conda create -n venv  # create venv
 $ conda activate venv  # activate venv
 $ pip install vizpool # install vizpool
@@ -42,7 +42,7 @@ $ pip install vizpool # install vizpool
 
 * Create a new Python virtual environment with pip for the vizpool:
 ```
-$ cd vizpool
+
 $ python3 -m venv venv  # create venv
 $ . venv/bin/activate   # activate venv
 $ pip install streamlit # install vizpool
