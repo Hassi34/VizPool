@@ -1,82 +1,50 @@
 
-# OneFlow
+# 🔥📊📣 VizPool 📣📊🔥
 
-It is a Package having the Implementation of ANN with callbacks
+VizPool is a high level python API for data visualization.It provides low-code support for static and interactive visuals.
 
-## 🔗 Project Link
-Check out the Pypi Package [here](https://pypi.org/project/OneFlow-Hassi34/)
-## Run Locally
-
-Create two files in your working directory:
-* config.yaml
-* training.py
-
-## config.yaml
-```yaml
-params:
-  epochs : 3
-  batch_size : 32
-  num_classes : 10
-  input_shape : [28, 28]
-  loss_function : sparse_categorical_crossentropy
-  metrics : accuracy
-  optimizer : SGD
-  validation_datasize : 5000
-  es_patience : 5
-
-artifacts:
-  artifacts_dir : artifacts
-  model_dir : model
-  plots_dir : plots
-  model_name : model.h5
-  plot_name : results_plot.png
-  model_ckpt_dir : ModelCheckpoints
-  callbacked_model_name : model_ckpt.h5
-
-logs:
-  logs_dir : logs_dir
-  general_logs : general_logs
-  tensorboard_root_log_dir : tensorboard_logs
-
-
-```
-
-## training.py
-```python 
-from OneFlow.utils.common import read_config
-from OneFlow.utils.data_mgmt import get_data
-from OneFlow.utils.model import StepFlow
-import argparse, os 
-
-def training(config_path):
-    config = read_config(config_path)
-    validation_datasize = config["params"]["validation_datasize"]
-    #This "get_data" function is loading the mnist dataset, bring your own and divide into categories to perform the custom training
-    (X_train, y_train), (X_valid, y_valid), (X_test, y_test) = get_data(validation_datasize)
-    sp = StepFlow(config, X_train, y_train, X_valid, y_valid)
-    sp.create_model()
-    sp.fit_model()
-    sp.save_final_model()
-    sp.save_plot()
-
-if __name__ == "__main__":
-    args = argparse.ArgumentParser()
-    args.add_argument("-c", "--config", default="config.yaml")
-
-    parsed_args = args.parse_args()
-    training(config_path = parsed_args.config)
-
-```
-Then run the following commands on the termial 
+##Overview
+### 🔗 Project Link
+Check out the Pypi Package [here](https://pypi.org/project/vizpool/)
+### Installation
+Install via Pip!
 ```bash
-pip install OneFlow-Hassi34
-python training.py
+pip install vizpool
 ```
-##### On completion of training, run the following command on termial and observe the metrics on tensorboard 
 
+### Usage
+import the components and use it like any other python package
+*Static Visuals
 ```bash
-tensorboard --logdir=logs_dir/tensorboard_logs/
+from vizpool.utils import static
+```
+*Interactive Visuals
+```bash
+from vizpool.utils import interactive
+```
+# Contributing
+Yes, Please!  I believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so lets make it more efficient, let go with low-code!!
+
+Follow the instructions on the `vizpoolQuickStart` [example file](https://github.com/Hassi34/vizpool/blob/main/vizpoolQuickStart.ipynb) to get up and running, or follow along below!
+
+### Quickstart
+
+* Ensure you have [Python 3.7+](https://www.python.org/downloads/)installed.
+
+* Create a new Python conda environment for the vizpool:
 
 ```
+$ cd vizpool
+$ conda create -n venv  # create venv
+$ conda activate venv  # activate venv
+$ pip install vizpool # install vizpool
+```
 
+* Create a new Python virtual environment with pip for the vizpool:
+```
+$ cd vizpool
+$ python3 -m venv venv  # create venv
+$ . venv/bin/activate   # activate venv
+$ pip install streamlit # install vizpool
+```
 
