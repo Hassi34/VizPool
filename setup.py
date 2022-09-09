@@ -8,7 +8,7 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
-    version="0.0.6",
+    version="0.0.7",
     author= USERNAME,
     author_email="hasnainmehmood3435@gmail.com",
     description="A high-level python API with low-code support for Data Visualization",
