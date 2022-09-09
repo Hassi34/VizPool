@@ -6,8 +6,8 @@ def barchart(df, values, categories, title = 'Bar Chart', orientation='h', texpo
 
     Args:
         df (object): A pandas dataframe object
-        values (int, float): Numerical data to plot against the categories
-        categories (object): An object list containing the categories as elements
+        values (str): Name of the column numerical data to plot against the categories
+        categories (str): Name of the column having the list of categories as elements
         title (str): The title of the chart. Defaults to 'Bar Chart'.
         orientation (str): To plot the chart horizontly or vertically. Defaults to 'h'.
         texposition (str): Position of the text on chart. Defaults to "auto".
@@ -16,7 +16,7 @@ def barchart(df, values, categories, title = 'Bar Chart', orientation='h', texpo
         height (int, optional): The height of the visualization. Defaults to 500.
 
     Returns:
-        object: it returns figure object, calling .show() on the object will plot the chart
+        object: It returns figure object, calling ".show()" on the object will plot the chart
     """
     if orientation == 'h':
         data_labels = values
@@ -33,6 +33,22 @@ def barchart(df, values, categories, title = 'Bar Chart', orientation='h', texpo
     return fig
 
 def heatmap(df, index, columns, values, aggfunc, x_label = None, y_label = None, color_label = None, title = None):
+    """It will receive the following parameters and return the "fig" object to plot a Heatmap
+
+    Args:
+        df (object): A Pandas dataframe object
+        index (str): Name of the column to be set as index
+        columns (str): Name of the column to be set as column
+        values (str): Column name having numerical values
+        aggfunc (str): Type of aggregation to be applied
+        x_label (str): Label for x-axis. Defaults to None.
+        y_label (str): Label for y-axis. Defaults to None.
+        color_label (str): Color of the label. Defaults to None.
+        title (str): Title of the visualization. Defaults to None.
+
+    Returns:
+        object: It returns figure object, calling ".show()" on the object will plot the chart
+    """
     df_pivot = df[[index, columns ,values]].pivot_table(index =index, columns = columns, aggfunc = aggfunc, fill_value=0)
     fig = px.imshow(df_pivot.values,
             labels=dict(x=x_label, y=y_label, color=color_label),

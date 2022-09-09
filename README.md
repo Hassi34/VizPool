@@ -1,5 +1,5 @@
 
-# 🔥📊📣 VizPool 📣📊🔥
+# 🔥📊📣 VizPool 📣📊🔥[![Downloads](https://pepy.tech/badge/vizpool)](https://pepy.tech/project/vizpool) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/hassi34)
 
 VizPool is a high level python API for data visualization.It provides low-code support for static and interactive visuals.
 
@@ -16,11 +16,11 @@ pip install vizpool
 import the components and use it like any other python package
 * Static Visuals
 ```bash
-from vizpool.utils import static
+from vizpool import static
 ```
 * Interactive Visuals
 ```bash
-from vizpool.utils import interactive
+from vizpool import interactive
 ```
 # Contributing
 Yes, Please!  I believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so lets make it more efficient, let go with low-code!!
