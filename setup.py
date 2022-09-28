@@ -19,13 +19,13 @@ setuptools.setup(
         "Bug Tracker": f"https://github.com/{USERNAME}/{PROJECT_NAME}/issues",
     },
     classifiers=[
-            'Intended Audience :: Science/Research/Engineering'
+            'Intended Audience :: Science/Research/Engineering',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'License :: OSI Approved :: MIT License',
             'Topic :: Scientific/Engineering :: Visualization',
-            'Operating System :: OS Independent',
+            'Operating System :: OS Independent'
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
