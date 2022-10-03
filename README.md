@@ -66,7 +66,7 @@ $ pip install vizpool # install vizpool
     2)- [VizPool Interactive API](https://jovian.ai/hasnainmehmood3435/vizpool-interactive-api)<br><br>
 * PDF versions of the tutorials are available at the following links:<br>
     1)- [VizPool Static API](https://github.com/Hassi34/vizpool/blob/master/vizpool-static-api.pdf)<br>
-    2)- [VizPool Interactive API](https://github.com/Hassi34/vizpool/blob/master/vizpool-Interactive-api.pdf)<br>
+    2)- [VizPool Interactive API](https://github.com/Hassi34/vizpool/blob/master/vizpool-interactive-api.pdf)<br>
 ### Contributing<a id='contributing-'></a>
 Yes, Please!  We believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so lets make it more efficient, let go with low-code!!
 
