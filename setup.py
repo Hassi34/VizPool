@@ -8,10 +8,10 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
-    version="0.0.8.dev2",
+    version="0.0.8.rc1",
     author= USERNAME,
     author_email="hasnainmehmood3435@gmail.com",
-    description="A high-level python API with low-code support for Data Visualization",
+    description="A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=f"https://github.com/{USERNAME}/{PROJECT_NAME}",
@@ -23,6 +23,7 @@ setuptools.setup(
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
             'License :: OSI Approved :: MIT License',
             'Topic :: Scientific/Engineering :: Visualization',
             'Operating System :: OS Independent'
@@ -36,5 +37,6 @@ setuptools.setup(
         "pandas >= 1.3.5",
         "seaborn >= 0.11.1",
         "scikit-learn==1.1.2",
+        "kaleido==0.0.3"
     ]
 )   

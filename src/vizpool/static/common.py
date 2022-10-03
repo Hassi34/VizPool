@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def get_num_cols(df, col_to_plot):
     if col_to_plot == "default":
         num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
@@ -31,3 +30,4 @@ def get_cat_cols(df, col_to_plot):
     except:
         columns = 1
     return cat_cols, columns
+
