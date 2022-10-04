@@ -1,6 +1,6 @@
 """
 Author : Hasanain Mehmood
-Contact : hasnainmehmood3435@gmail.com 
+Contact : hasanain@aicailber.com 
 """
 
 import pickle
@@ -188,4 +188,21 @@ class Evaluation:
         plt.ylabel("True Positive Rate", fontsize=15)
         plt.title(title, fontweight='bold', fontsize=15)
         plt.legend(prop={'size': 13}, loc='lower right')
+        return plt
+
+    def residplot(self, y_predicted: Union[array, pd.Series], color="#ce1414", width=18, height=20) -> object:
+        """This method will plot the residual plot with the following arguments provided: 
+
+        Args:
+            y_predicted (Union[pd.Series, array]): An array or Pandas series representing the predicted values.
+            color (str, optional): Color of the plot. Defaults to "#ce1414".
+            width (int, optional): Width of the plot. Defaults to 18.
+            height (int, optional): Height of the plot. Defaults to 20.
+
+        Returns:
+            object: An Object which can be used to save or plot charts in any python application.
+        """
+        sns.set(font_scale=1)
+        plt.figure(figsize=(width, height))
+        sns.jointplot(x=self.y_val, y=y_predicted, kind='resid', color=color)
         return plt
