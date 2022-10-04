@@ -1,6 +1,6 @@
 """
 Author : Hasanain Mehmood
-Contact : hasnainmehmood3435@gmail.com 
+Contact : hasanain@aicailber.com 
 """
 
 import matplotlib.pyplot as plt
@@ -146,12 +146,12 @@ class EDA:
         plt.xticks(rotation=x_label_rotation)
         return plt
 
-    def jointplot(self, var1: str, var2: str, kind="reg", color="#ce1414", width=18, height=20) -> object:
+    def jointplot(self, x: str, y: str, kind="reg", color="#ce1414", width=18, height=20) -> object:
         """This method will plot the jointplot with the following arguments provided: 
 
         Args:
-            var1 (str): Numeraical column name to be plotted on x-axis
-            var2 (str): Numeraical column name to be plotted on y-axis
+            x (str): Numeraical column name to be plotted on x-axis
+            y (str): Numeraical column name to be plotted on y-axis
             kind (str, optional): Kind of chart to plot, available selections: ['scatter','kde','hist','hex','reg', 'resid']. Defaults to "reg".
             color (str, optional): Color of the plot. Defaults to "#ce1414".
             width (int, optional): Width of the plot. Defaults to 18.
@@ -162,7 +162,7 @@ class EDA:
         """
         sns.set(font_scale=1)
         plt.figure(figsize=(width, height))
-        sns.jointplot(data=self.df, x=var1, y=var2, kind=kind, color=color)
+        sns.jointplot(data=self.df, x=x, y=y, kind=kind, color=color)
         return plt
 
     def corr_heatmap(self, col_to_plot='default', width=25, height=20, title="Correlation Plot") -> object:

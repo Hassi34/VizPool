@@ -8,6 +8,7 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Downloads](https://static.pepy.tech/personalized-badge/vizpool?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/vizpool)
 [![Last Commit](https://img.shields.io/github/last-commit/hassi34/vizpool/main)](https://github.com/hassi34/vizpool)
+[![License](https://img.shields.io/apm/l/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Issue Tracking](https://img.shields.io/badge/issue_tracking-github-brightgreen.svg)](https://github.com/hassi34/vizpool/issues)
 [![Open Issues](https://img.shields.io/github/issues/hassi34/vizpool)](https://github.com/hassi34/vizpool/issues) 
 [![Github Actions Status](https://img.shields.io/github/workflow/status/hassi34/vizpool/Publish%20Python%20distributions%20to%20PyPI%20and%20TestPyPI?event=push)](https://pypi.org/project/vizpool)
@@ -61,15 +62,15 @@ $ python3 -m venv venv  # create venv
 $ . venv/bin/activate   # activate venv
 $ pip install vizpool # install vizpool
 ```
-* PLease follow the links below to get the complete interactive tutorials on **getting stated with VizPool**:<br>
+👉 PLease follow the links below to get the complete interactive tutorials on **getting stated with VizPool**:<br>
     1)- [VizPool Static API](https://jovian.ai/hasnainmehmood3435/vizpool-static-api)<br>
     2)- [VizPool Interactive API](https://jovian.ai/hasnainmehmood3435/vizpool-interactive-api)<br><br>
-* PDF versions of the tutorials are available at the following links:<br>
+👉 PDF versions of the tutorials are available at the following links:<br>
     1)- [VizPool Static API](https://github.com/Hassi34/vizpool/blob/master/vizpool-static-api.pdf)<br>
     2)- [VizPool Interactive API](https://github.com/Hassi34/vizpool/blob/master/vizpool-interactive-api.pdf)<br>
 ### Contributing<a id='contributing-'></a>
-Yes, Please!  We believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so lets make it more efficient, let go with low-code!!
+Yes, Please!  We believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so let's make it more efficient, let's go with low-code!!
 
-#### **Please give this repository a star if you find our work useful, Thank you!**
+#### **Please give this repository a star if you find our work useful, Thank you! 🙏**
 
 
