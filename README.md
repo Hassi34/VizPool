@@ -1,4 +1,5 @@
-<b><h1 style="text-align:center">📊 VizPool 📊</h1></b>
+<p align="center">
+    <b><h1 style="text-align:center">📊 VizPool 📊</h1></b>
 </p>
 <p align="center">
     <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations</em>
@@ -8,7 +9,7 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Downloads](https://static.pepy.tech/personalized-badge/vizpool?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/vizpool)
 [![Last Commit](https://img.shields.io/github/last-commit/hassi34/vizpool/main)](https://github.com/hassi34/vizpool)
-[![License](https://img.shields.io/apm/l/vizpool?color=g)](https://pypi.org/project/vizpool)
+[![License](https://img.shields.io/github/license/hassi34/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Issue Tracking](https://img.shields.io/badge/issue_tracking-github-brightgreen.svg)](https://github.com/hassi34/vizpool/issues)
 [![Open Issues](https://img.shields.io/github/issues/hassi34/vizpool)](https://github.com/hassi34/vizpool/issues) 
 [![Github Actions Status](https://img.shields.io/github/workflow/status/hassi34/vizpool/Publish%20Python%20distributions%20to%20PyPI%20and%20TestPyPI?event=push)](https://pypi.org/project/vizpool)
