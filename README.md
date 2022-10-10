@@ -26,7 +26,7 @@ Following are the major contents to follow, you can jump to any section:
 >   3. [Getting Started with VizPool (Tutorials)](#tutorials-)
 >   4. [Contributing](#contributing-)
 ### 🔗 Project Link
-``VizPool`` is being distributed through PyPI. Check out the PyPI Package [here](https://pypi.org/project/vizpool/)
+**``VizPool``** is being distributed through PyPI. Check out the PyPI Package [here](https://pypi.org/project/vizpool/)
 
 
 ### Installation<a id='install-'></a>
@@ -72,6 +72,8 @@ $ pip install vizpool # install vizpool
 ### Contributing<a id='contributing-'></a>
 Yes, Please!  We believe that there is alot of oportunity to make even the most complex visuals available for data comunity, so let's make it more efficient, let's go with low-code!!
 
-#### **Please give this repository a star if you find our work useful, Thank you! 🙏**
+#### **Please give this repository a star if you find our work useful, Thank you! 🙏**<br><br>
 
+**Copyright &copy; 2022 VizPool** <br>
+Let's connect on **[``LinkedIn``](https://www.linkedin.com/in/hasanain-mehmood-a37a4116b/)** <br>
 
