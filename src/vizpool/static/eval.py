@@ -4,7 +4,7 @@ Contact : hasanain@aicailber.com
 """
 
 import pickle
-import warnings
+
 from array import array
 from typing import Union
 
@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-
+#warnings.filterwarnings("ignore")
+import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
-plt.style.use('fivethirtyeight')
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
 
-
+plt.style.use('fivethirtyeight')
 class Evaluation:
     """This class will provide the common Machine learning evaluation plots.
 
