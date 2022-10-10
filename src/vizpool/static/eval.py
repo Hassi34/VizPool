@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.inspection import permutation_importance
 from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
 
 plt.style.use('fivethirtyeight')
@@ -66,51 +67,63 @@ class Evaluation:
         plt.title(title)
         return plt
 
-    def feature_importance(self, estimator: object, X_train: pd.DataFrame, y_train: Union[pd.DataFrame, pd.Series, array],
-                           width=15, height=10, title='Feature Importance') -> object:
-        """This method will plot the chart for the feature importances with a trianed classifier of pipeline while following arguments being provided:
+    def feature_importance(self, estimator: object, X_val: object, pipeline=False,
+                           width: int = 15, height: int = 10) -> object:
+        """This method will plot the chart for the feature importances with a trianed classifier of pipeline with following arguments being provided:
 
         Args:
             estimator (object): A trained estimator or a pipeline.
-            X_train (pd.DataFrame): A pandas dataframe.
-            y_train (Union[pd.DataFrame, pd.Series, array]): Class labels of the dataframe.
+            X_test (object): A pandas dataframe.
+            pipeline (bool, optional): Whether the estimator is pipeline object or not. Defaults to False.
             width (int, optional): Width of the plot. Defaults to 15.
             height (int, optional): Height of the plot. Defaults to 10.
-            title (str, optional): Title of the plot. Defaults to 'Feature Importance'.
 
         Returns:
             object: An Object which can be used to save or plot charts in any python application.
         """
         sns.set(font_scale=1)
-        estimator.fit(X_train, y_train)
         weights = None
-        estimators = ['classifier', 'regressor', 'estimator']+[estimator]
-        for estimator in estimators:
-            if weights is None:
-                try:
-                    estimator_name = estimator[estimator].__class__.__name__
-                except:
-                    estimator_name = estimator.__class__.__name__
-                try:
-                    weights = estimator.coef_
-                except:
+        if pipeline:
+            feature_names = [str(feature).split("__")[-1]
+                             for feature in estimator[:-1].get_feature_names_out()]
+            try:
+                result = permutation_importance(
+                    estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=-1)
+            except:
+                pass
+            for model in ['classifier', 'regressor', 'estimator']:
+                if weights is None:
                     try:
-                        weights = estimator.feature_importances_
+                        estimator_name = estimator[model].__class__.__name__
+                    except:
+                        pass
+                    try:
+                        weights = estimator[model].coef_[0]
                     except:
                         try:
-                            weights = estimator[estimator].coef_
+                            weights = estimator[model].feature_importances_
                         except:
-                            try:
-                                weights = estimator[estimator].feature_importances_
-                            except:
-                                weights = None
+                            weights = None
+        else:
+            estimator_name = estimator.__class__.__name__
+            feature_names = X_val.columns.tolist()
+            result = permutation_importance(
+                estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=-1)
+            try:
+                weights = estimator.coef_[0]
+            except:
+                try:
+                    weights = estimator.feature_importances_
+                except:
+                    weights = None
         if weights is None:
-            print(f"\n!!! No Coefficients to plot for {estimator_name}, skipping feature importance plot for {estimator_name}\n")
+            print(
+                f"\n!!! Feature importance plot is not available for {estimator_name}, skipping feature importance for {estimator_name}...\n")
             return None
         weights = np.array(weights).flatten()
         try:
             weights_df = pd.DataFrame({
-                'columns': X_train.columns,
+                'columns': feature_names,
                 'weight': weights
             }).sort_values('weight', ascending=False)
         except:
@@ -123,15 +136,28 @@ class Evaluation:
             lambda x: "green" if x > 0 else "red")
         weights_df = weights_df.sort_values("abs_value", ascending=False)
 
-        fig, ax = plt.subplots(1, 1, figsize=(width, height))
-        sns.barplot(x="columns",
-                    y="weight",
+        fig = plt.figure(figsize=(width, height))
+        plt.subplot(1, 2, 1)
+        sns.barplot(y="columns",
+                    x="weight",
                     data=weights_df.head(30),
                     palette=weights_df.head(30)["colors"])
-        ax.set_xticklabels(ax.get_xticklabels(), rotation=45, fontsize=8)
-        ax.set_ylabel("Coef", fontsize=12)
-        ax.set_xlabel("Feature Name", fontsize=10)
-        plt.title(title, fontweight='bold', fontsize=15)
+        plt.yticks(rotation=45)
+        plt.ylabel("Feature Name", fontsize=12)
+        plt.xlabel("Feature Importance", fontsize=10)
+        plt.title("Feature Importance", fontweight='bold', fontsize=15)
+        sorted_idx = result.importances_mean.argsort()
+        plt.subplot(1, 2, 2)
+        plt.boxplot(
+            result.importances[sorted_idx].T,
+            vert=False,
+            labels=(X_val.columns)[sorted_idx],
+        )
+        plt.yticks(rotation=45)
+        plt.xlabel("Feature Importance", fontsize=10)
+        plt.title("Permutation Importance (test set)",
+                  fontweight='bold', fontsize=15)
+        fig.tight_layout()
         return plt
 
     def auc_roc_plot(self, X_val: pd.DataFrame, classifiers: list, classifier_names: list, width=15, height=10, title='ROC Curve Analysis') -> object:
