@@ -26,7 +26,7 @@ Following are the major contents to follow, you can jump to any section:
 >   3. [Getting Started with VizPool (Tutorials)](#tutorials-)
 >   4. [Contributing](#contributing-)
 ### 🔗 Project Link
-Check out the Pypi Package [here](https://pypi.org/project/vizpool/)
+``VizPool`` is being distributed through PyPI. Check out the PyPI Package [here](https://pypi.org/project/vizpool/)
 
 
 ### Installation<a id='install-'></a>
