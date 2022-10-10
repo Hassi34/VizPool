@@ -12,11 +12,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.inspection import permutation_importance
-from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 plt.style.use('fivethirtyeight')
+from sklearn.inspection import permutation_importance
+from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
 
 
 class Evaluation:
