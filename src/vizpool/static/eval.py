@@ -66,12 +66,12 @@ class Evaluation:
         plt.title(title)
         return plt
 
-    def feature_importance(self, classifier: object, X_train: pd.DataFrame, y_train: Union[pd.DataFrame, pd.Series, array],
+    def feature_importance(self, estimator: object, X_train: pd.DataFrame, y_train: Union[pd.DataFrame, pd.Series, array],
                            width=15, height=10, title='Feature Importance') -> object:
         """This method will plot the chart for the feature importances with a trianed classifier of pipeline while following arguments being provided:
 
         Args:
-            classifier (object): A trained classifier or a pipeline.
+            estimator (object): A trained estimator or a pipeline.
             X_train (pd.DataFrame): A pandas dataframe.
             y_train (Union[pd.DataFrame, pd.Series, array]): Class labels of the dataframe.
             width (int, optional): Width of the plot. Defaults to 15.
@@ -82,26 +82,31 @@ class Evaluation:
             object: An Object which can be used to save or plot charts in any python application.
         """
         sns.set(font_scale=1)
-        classifier.fit(X_train, y_train)
-        try:
-            clf_name = classifier["classifier"].__class__.__name__
-        except:
-            clf_name = classifier.__class__.__name__
-        try:
-            weights = classifier.coef_
-        except:
-            try:
-                weights = classifier.feature_importances_
-            except:
+        estimator.fit(X_train, y_train)
+        weights = None
+        estimators = ['classifier', 'regressor', 'estimator']+[estimator]
+        for estimator in estimators:
+            if weights is None:
                 try:
-                    weights = classifier["classifier"].coef_
+                    estimator_name = estimator[estimator].__class__.__name__
+                except:
+                    estimator_name = estimator.__class__.__name__
+                try:
+                    weights = estimator.coef_
                 except:
                     try:
-                        weights = classifier["classifier"].feature_importances_
+                        weights = estimator.feature_importances_
                     except:
-                        print(
-                            f"\n!!! No Coefficients to plot for {clf_name}, skipping feature importance plot for {clf_name}")
-                        return None
+                        try:
+                            weights = estimator[estimator].coef_
+                        except:
+                            try:
+                                weights = estimator[estimator].feature_importances_
+                            except:
+                                weights = None
+        if weights is None:
+            print(f"\n!!! No Coefficients to plot for {estimator_name}, skipping feature importance plot for {estimator_name}\n")
+            return None
         weights = np.array(weights).flatten()
         try:
             weights_df = pd.DataFrame({
