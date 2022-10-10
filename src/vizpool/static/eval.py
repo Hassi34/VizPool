@@ -89,9 +89,10 @@ class Evaluation:
             feature_names = [str(feature).split("__")[-1]
                              for feature in estimator[:-1].get_feature_names_out()]
             try:
-                X, y = X_val, self.y_val
-                result = permutation_importance(
-                    estimator, X, y, n_repeats=10, random_state=42, n_jobs=-1)
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore")
+                    result = permutation_importance(
+                        estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=2)
             except:
                 pass
             for model in ['classifier', 'regressor', 'estimator']:
@@ -110,9 +111,10 @@ class Evaluation:
         else:
             estimator_name = estimator.__class__.__name__
             feature_names = X_val.columns.tolist()
-            X, y = X_val, self.y_val
-            result = permutation_importance(
-                estimator, X, y, n_repeats=10, random_state=42, n_jobs=-1)
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore")
+                result = permutation_importance(
+                    estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=2)
             try:
                 weights = estimator.coef_[0]
             except:
