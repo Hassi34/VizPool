@@ -8,7 +8,7 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
-    version="0.0.9.dev6",
+    version="0.0.9.dev7",
     author= USERNAME,
     author_email="hasanain@aicaliber.com",
     description="A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations",

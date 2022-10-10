@@ -14,7 +14,7 @@ import pandas as pd
 import seaborn as sns
 #warnings.filterwarnings("ignore")
 import warnings
-warnings.simplefilter(action='ignore')
+warnings.simplefilter(action='ignore', category=FutureWarning)
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
 
@@ -89,10 +89,8 @@ class Evaluation:
             feature_names = [str(feature).split("__")[-1]
                              for feature in estimator[:-1].get_feature_names_out()]
             try:
-                with warnings.catch_warnings():
-                    warnings.filterwarnings("ignore")
-                    result = permutation_importance(
-                        estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=2)
+                result = permutation_importance(
+                    estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=-1)
             except:
                 pass
             for model in ['classifier', 'regressor', 'estimator']:
@@ -111,10 +109,8 @@ class Evaluation:
         else:
             estimator_name = estimator.__class__.__name__
             feature_names = X_val.columns.tolist()
-            with warnings.catch_warnings():
-                warnings.filterwarnings("ignore")
-                result = permutation_importance(
-                    estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=2)
+            result = permutation_importance(
+                estimator, X_val, self.y_val, n_repeats=10, random_state=42, n_jobs=-1)
             try:
                 weights = estimator.coef_[0]
             except:
