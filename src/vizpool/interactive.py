@@ -18,12 +18,12 @@ class EDA:
             df (pd.DataFrame): Pandas dataframe to perform the EDA on.
     """
 
-    def __init__(self, df:pd.DataFrame): 
+    def __init__(self, df: pd.DataFrame):
         """Constructs all the necessary attributes for the instance of EDA class.
 
         Args:
             df (pd.DataFrame): Pandas dataframe to perform the EDA on.
-        """        
+        """
         self.df = df
 
     def barchart(self, values: str, categories: str, aggfunc='sum', title='Bar Chart',

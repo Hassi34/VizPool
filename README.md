@@ -15,7 +15,6 @@
 [![Github Actions Status](https://img.shields.io/github/workflow/status/hassi34/vizpool/Publish%20Python%20distributions%20to%20PyPI%20and%20TestPyPI?event=push)](https://pypi.org/project/vizpool)
 [![Code Size](https://img.shields.io/github/languages/code-size/hassi34/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Repo Size](https://img.shields.io/github/repo-size/hassi34/vizpool?color=g)](https://pypi.org/project/vizpool)
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/hassi34)
 
 ## Overview
 VizPool enables you to create impressive static and interactive visuals with just one line of code. You will be introduced to a number of class methods to choose from. You can call these methods with specific keyword or positional arguments to generate amazing static and interactive visuals.<br>
