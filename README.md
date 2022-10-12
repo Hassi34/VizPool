@@ -1,5 +1,5 @@
 <p align="center">
-    <b><h1 style="text-align:center">📊 VizPool 📊</h1></b>
+    <b><h1 style="text-align:center">📊 <em>VizPool</em> 📊</h1></b>
 </p>
 <p align="center">
     <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations</em>
@@ -34,7 +34,7 @@ Install via Pip!
 pip install vizpool
 ```
 ### Usage<a id='use-'></a>
-import the components and use it like any other python package
+Import the components and use it like any other python package
 * Static Visuals
 ```bash
 from vizpool.static import EDA
