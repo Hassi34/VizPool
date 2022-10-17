@@ -172,7 +172,7 @@ class EDA:
         return fig
 
     def area_chart(self, categories: str, values: str, aggfunc: str='mean', data_labels: bool=True, sort_by: str=None, ascending: bool=True,
-                     unit: str=None, width: int=600, height: int=450,  title: str="Area Chart") -> object:
+                    unit: str=None, width: int=600, height: int=450,  title: str="Area Chart") -> object:
         """This method will plot the area chart with the following arguments provided:
 
         Args:
