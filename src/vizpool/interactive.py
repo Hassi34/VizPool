@@ -190,16 +190,20 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
-        df = self.df.copy()
-        if aggfunc == 'mean':
-            df = df[[categories]+[values]
-                    ].groupby([categories], as_index=False).mean()
-        elif aggfunc == 'sum':
-            df = df[[categories]+[values]
-                    ].groupby([categories], as_index=False).sum()
-        elif aggfunc == 'median':
-            df = df[[categories]+[values]
-                    ].groupby([categories], as_index=False).median()
+        if sort_by == values:
+            df = self.df.groupby(categories, as_index=False)\
+            .agg(aggfunc, numeric_only=True)[[categories]+[values]]
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+        elif sort_by is not None:
+            df = self.df.groupby(categories, as_index=False)\
+            .agg(aggfunc, numeric_only=True)[[categories]+[values]+[sort_by]]
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+        else:
+            df = self.df.groupby(categories, as_index=False)\
+                .agg(aggfunc, numeric_only=True)[[categories]+[values]]
+
         if data_labels:
             if unit == None:
                 unit = " "
@@ -207,8 +211,7 @@ class EDA:
                 unit = " "+unit
             text = [str(int(val))+unit for val in df[values]]
         else: text = None
-        if sort_by:
-            df = df.sort_values(sort_by, ascending = ascending)
+
         fig = px.area(
             df,
             x=df[categories],
@@ -389,10 +392,20 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
-        df = self.df.groupby(time, as_index=False)\
+        if sort_by in values:
+            df = self.df.groupby(time, as_index=False)\
             .agg(aggfunc, numeric_only=True)[[time]+values]
-        if sort_by:
-            df = df.sort_values(sort_by, ascending = ascending)
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+        elif sort_by is not None:
+            df = self.df.groupby(time, as_index=False)\
+            .agg(aggfunc, numeric_only=True)[[time]+values+[sort_by]]
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+        else:
+            df = self.df.groupby(time, as_index=False)\
+            .agg(aggfunc, numeric_only=True)[[time]+values]
+
         fig = go.Figure()
         if legend is None:
             legend = values

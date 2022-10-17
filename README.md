@@ -1,5 +1,5 @@
 <p align="center">
-    <b><h1 style="text-align:center">📊 <em>VizPool</em> 📊</h1></b>
+    <b><h1 style="text-align:center">📊 VizPool 📊</h1></b>
 </p>
 <p align="center">
     <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations</em>
