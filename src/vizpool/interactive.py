@@ -26,14 +26,18 @@ class EDA:
         """
         self.df = df
 
-    def barchart(self, values: str, categories: str, aggfunc='sum', title='Bar Chart',
-                 orientation='h', texposition="auto", text_color='white', width=600, height=500):
+    def barchart(self, values: str, categories: str, aggfunc: str='sum', data_labels: bool=True, title: str='Bar Chart', sort_by: str=None, ascending: bool=True,
+                 orientation: str='h', texposition: str="auto", text_color: str='white', width: int=600, height: int=500) -> object:       
         """This method will plot a Bar chart with the following arguments provided:
 
         Args:
-            values (str): Name of the column having numerical data to plot against the categories
-            categories (str): Name of the column having the list of categories as elements
+            values (str): Name of the column having numerical data to plot against the categories.
+            categories (str): Name of the column having the list of categories as elements.
+            aggfunc (str, optional): Aggregation function. Defaults to 'sum'.
+            data_labels (bool, optional): Show data labels. Defaults to True.
             title (str): The title of the chart. Defaults to 'Bar Chart'.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
             orientation (str): To plot the chart horizontly or vertically. Defaults to 'h'.
             texposition (str): Position of the text on chart. Defaults to "auto".
             text_color (str): Text color. Defaults to 'white'.
@@ -47,6 +51,11 @@ class EDA:
             value=pd.NamedAgg(values, aggfunc=aggfunc)
         )
         df.columns = [categories, values]
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
+        if data_labels:
+            text = [round(val, 0) for val in df[values]]
+        else: text = None
         if orientation == 'h':
             x = df[values]
             y = df[categories]
@@ -57,7 +66,7 @@ class EDA:
             x=x,
             y=y,
             orientation=orientation,
-            text=[round(val, 0) for val in df[values]], textposition=texposition, textfont=dict(color=text_color),))
+            text=text, textposition=texposition, textfont=dict(color=text_color),))
 
         fig.update_layout(barmode='stack', xaxis={
             'categoryorder': 'total descending'})
@@ -65,18 +74,19 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def heatmap(self, index: str, columns: str, values: str, aggfunc='mean', x_label=None, y_label=None, color_label=None, title='Heatmap'):
+    def heatmap(self, index: str, columns: str, values: str, aggfunc: str='mean', data_labels: bool=True, x_label: str=None, y_label: str=None, color_label: str=None, title: str='Heatmap') -> object:    
         """Thi method will plot a heatmap with the following arguments provided:
 
         Args:
-            index (str): Name of the column to be set as index
-            columns (str): Name of the column to be set as column
-            values (str): Column name having numerical values
-            aggfunc (str): Type of aggregation to be applied
-            x_label (str): Label for x-axis. Defaults to None.
-            y_label (str): Label for y-axis. Defaults to None.
-            color_label (str): Color of the label. Defaults to None.
-            title (str): Title of the visualization. Defaults to Heatmap.
+            index (str): Name of the column to be set as index.
+            columns (str): Name of the column to be set as column.
+            values (str): Column name having numerical values.
+            aggfunc (str, optional): Type of aggregation to be applied.
+            data_labels (bool, optional): Show data labels. Defaults to True.
+            x_label (str, optional): Label for x-axis. Defaults to None.
+            y_label (str, optional): Label for y-axis. Defaults to None.
+            color_label (str, optional): Color of the label. Defaults to None.
+            title (str, optional): Title of the visualization. Defaults to Heatmap.
 
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application
@@ -86,7 +96,7 @@ class EDA:
         fig = px.imshow(df_pivot.values,
                         labels=dict(x=x_label, y=y_label, color=color_label),
                         x=[x[1] for x in df_pivot.columns],
-                        y=df_pivot.index.tolist(), text_auto=True
+                        y=df_pivot.index.tolist(), text_auto=data_labels
                         )
         fig.update_traces(dict(showscale=False,
                                coloraxis=None,
@@ -94,8 +104,8 @@ class EDA:
         fig.update_xaxes(side="top", title=title)
         return fig
 
-    def stack_or_group_chart(self, categories: str, values: list, barmode="stack", orientation='v',
-                             texposition='inside', aggfunc="mean", text_color='white', title=None):
+    def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True,
+                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", text_color: str='white', title: str=None) -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
         Args:
@@ -103,6 +113,9 @@ class EDA:
             values (list): list of numerical columns to plot
             barmode (str, optional): The position of the bars for the relavent data. Defaults to "stack".
             orientation (str, optional): Orientation of the graph could be vertical or horizontal. Defaults to 'v'.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
+            data_labels (bool, optional): Show data labels. Defaults to True.
             texposition (str, optional): Position of the text labels on the plot. Defaults to 'inside'.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
             text_color (str, optional): Color of text. Defaults to 'white'.
@@ -113,21 +126,29 @@ class EDA:
         """
         df = self.df[[categories]+values].groupby(
             [categories], as_index=False).agg(aggfunc, numeric_only=True)
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
         data = []
         if orientation == 'v':
             for i in range(len(values)):
+                if data_labels:
+                    text = [int(val) for val in df[values[i]]]
+                else: text = None
                 data.append(go.Bar(name=values[i], x=df[categories], y=df[values[i]], orientation=orientation,
-                                   text=[int(val) for val in df[values[i]]], textposition=texposition, textfont=dict(color=text_color),))
+                                   text=text, textposition=texposition, textfont=dict(color=text_color),))
         else:
             for i in range(len(values)):
+                if data_labels:
+                    text = [int(val) for val in df[values[i]]]
+                else: text = None
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
-                                   text=[int(val) for val in df[values[i]]], textposition=texposition, textfont=dict(color=text_color),))
+                                   text=text, textposition=texposition, textfont=dict(color=text_color),))
         fig = go.Figure(data=data)
         fig.update_layout(barmode=barmode)
         fig.update_layout(autosize=False, width=600, height=500, title=title)
         return fig
 
-    def piechart(self, categories: str, values: str, width=600, height=500, title='Pie Chart'):
+    def piechart(self, categories: str, values: str, width: int=600, height: int=500, title: str='Pie Chart') -> object:
         """This method will plot a pie chart using with the following arguments provided:
 
         Args:
@@ -150,13 +171,17 @@ class EDA:
                      )
         return fig
 
-    def area_chart(self, categories: str, values: str, aggfunc='mean', unit=None, width=600, height=450,  title="Area Chart"):
+    def area_chart(self, categories: str, values: str, aggfunc: str='mean', data_labels: bool=True, sort_by: str=None, ascending: bool=True,
+                     unit: str=None, width: int=600, height: int=450,  title: str="Area Chart") -> object:
         """This method will plot the area chart with the following arguments provided:
 
         Args:
             categories (str): categorical column name.
             values (str): column name for values to plot.
             aggfunc (str, optional): Aggregation function. Defaults to 'mean'.
+            data_labels (bool, optional): Show data labels. Defaults to True.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
             unit (str, optional): Unit to be displayed with the datalabels. Defaults to None.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
@@ -175,29 +200,37 @@ class EDA:
         elif aggfunc == 'median':
             df = df[[categories]+[values]
                     ].groupby([categories], as_index=False).median()
-        if unit == None:
-            unit = " "
-        else:
-            unit = " "+unit
+        if data_labels:
+            if unit == None:
+                unit = " "
+            else:
+                unit = " "+unit
+            text = [str(int(val))+unit for val in df[values]]
+        else: text = None
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
         fig = px.area(
             df,
             x=df[categories],
             y=df[values],
-            text=[str(int(val))+unit for val in df[values]], title=title
+            text=text, title=title
         )
         fig.update_traces(mode='markers+lines+text',
                           textfont_size=12, textposition="top left")
         fig.update_layout(autosize=False, width=width, height=height,)
         return fig
 
-    def bar_line(self, categories: str, values: list, aggfunc=['mean', 'sum'], legends=None,  width=600, height=450,
-                 title="Bar Line Chart", texposition="auto", text_color="white", round_decimal=0):
+    def bar_line(self, categories: str, values: list, aggfunc: list=['mean', 'sum'], data_labels: bool=True, sort_by: str=None, ascending: bool=True, legends: list=None,
+                width: int=600, height: int=450,title: str="Bar Line Chart", texposition: str="auto", text_color: str="white", round_decimal: int=0) -> object:
         """This method will plot a bar line chart with the following arguments provided:
 
         Args:
             categories (str): Name of the categorical column.
             values (list): A list of the names of numerical columns.
-            aggfunc (list, optional): . Defaults to ['mean','sum'].
+            aggfunc (list, optional): List of aggregation functions. Defaults to ['mean','sum'].
+            data_labels (bool, optional): Show data labels. Defaults to True.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
             legends (list, optional): List containing the custom legends as elements. Defaults to None.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
@@ -214,16 +247,24 @@ class EDA:
             val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1])
         )
         df.columns = [categories]+values
-        if round_decimal > 0:
-            line_data_labels = [round(val, round_decimal)
-                                for val in df[values[0]]]
-            bar_data_labels = [round(val, round_decimal)
-                               for val in df[values[1]]]
-        elif round_decimal == 0:
-            line_data_labels = [int(val) for val in df[values[0]]]
-            bar_data_labels = [int(val) for val in df[values[1]]]
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
+        if data_labels:
+            if round_decimal > 0:
+                line_data_labels = [round(val, round_decimal)
+                                    for val in df[values[0]]]
+                bar_data_labels = [round(val, round_decimal)
+                                for val in df[values[1]]]
+            elif round_decimal == 0:
+                line_data_labels = [int(val) for val in df[values[0]]]
+                bar_data_labels = [int(val) for val in df[values[1]]]
+        else: 
+            line_data_labels = None
+            bar_data_labels = None
+
         if legends is None:
             legends = values
+    
         fig = go.Figure()
         fig.add_trace(
             go.Scatter(name=legends[0], x=df[categories], y=df[values[0]],
@@ -239,7 +280,7 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def histogram(self, values: str, color=None, marginal=None, hover_data=None, title='Histogram', width=800, height=450):
+    def histogram(self, values: str, color: str=None, marginal: str=None, hover_data: list=None, title: str='Histogram', width: int=800, height: int=450) -> object:
         """This method with plot a histogram with following parameters provided:
 
         Args:
@@ -260,7 +301,7 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def distplot(self, values: list, width=800, height=450, title='Distribution Plot'):
+    def distplot(self, values: list, width: int=800, height: int=450, title: str='Distribution Plot') -> object:
         """Thi method will plot the distribution plot with the following parameters provided:
 
         Args:
@@ -279,7 +320,7 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def combined_corr(self, x_values: str, y_values: str, color=None, hover_name=None, size=None, title="Combined Correlation Plot"):
+    def combined_corr(self, x_values: str, y_values: str, color: str=None, hover_name: str=None, size: str=None, title: str="Combined Correlation Plot") -> object:
         """This method will plot the combined correlation plot using the following arguments:
 
         Args:
@@ -298,14 +339,17 @@ class EDA:
                          size=size, title=title)
         return fig
 
-    def multivar_bubble_chart(self, categories: list, values: list, aggfunc="mean", hover_name=None, width=600, height=450, title="Bubble Chart"):
+    def multivar_bubble_chart(self, categories: list, values: list, aggfunc: str="mean", hover_name: str=None, sort_by: str=None, ascending: bool=True,
+                              width: int=600, height: int=450, title: str="Bubble Chart") -> object:
         """This method will plot a multivariate bubble chart with the following arguments provided:
 
         Args:
             categories (list): List of the names of categorical columns to plot.
             values (list): List of the names of values columns to plot.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
-            hover_name (_type_, optional): Name of the category to be displayed on hover. Defaults to None.
+            hover_name (str, optional): Name of the category to be displayed on hover. Defaults to None.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
             width (int, optional): With of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the plot. Defaults to "Bubble Chart".
@@ -315,6 +359,8 @@ class EDA:
         """
         df = self.df.groupby(categories, as_index=False).agg(
             aggfunc, numeric_only=True)[categories+values]
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
         fig = px.scatter(df, x=df[categories[0]], y=df[values[0]],
                          size=df[values[1]], color=df[categories[1]],
                          hover_name=hover_name, size_max=20)
@@ -323,16 +369,19 @@ class EDA:
         fig.update_xaxes(side="top", title=title)
         return fig
 
-    def stacked_area_chart(self, time: str, values: list, aggfunc='mean',
-                           legend=None, unit=None, width=600, height=500, title="Stacked Area Chart"):
+    def stacked_area_chart(self, time: str, values: list, aggfunc: str='mean', data_labels: bool=True, sort_by: str=None, ascending: bool=True,
+                           legend: list=None, unit: str=None, width: int=600, height: int=500, title: str="Stacked Area Chart") -> object:
         """This method will plot a stacked area chart with following arguments provided:
 
         Args:
             time (str): A time or any relevant column name to be presented on x-axis.
             values (list): A list of numerical column to be ploted against the x-axis.
             aggfunc (str, optional): Aggregation function. Defaults to 'mean'.
-            legend (_type_, optional): List of legend names. Defaults to None.
-            unit (_type_, optional): Name of the measurement unit. Defaults to None.
+            data_labels (bool, optional): Show data labels. Defaults to True.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
+            legend (list, optional): List of legend names. Defaults to None.
+            unit (str, optional): Name of the measurement unit. Defaults to None.
             width (int, optional): Width of the column. Defaults to 600.
             height (int, optional): Height of the column. Defaults to 500.
             title (str, optional): Title of the plot. Defaults to "Stacked Area Chart".
@@ -340,23 +389,26 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
-        if unit == None:
-            unit = " "
-        else:
-            unit = " "+unit
-
         df = self.df.groupby(time, as_index=False)\
             .agg(aggfunc, numeric_only=True)[[time]+values]
-
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
         fig = go.Figure()
         if legend is None:
             legend = values
         for i in range(len(values)):
+            if data_labels:
+                if unit == None:
+                    unit = " "
+                else:
+                    unit = " "+unit
+                text = [str(round(i, 0))+unit for i in df[values[i]]]
+            else: text = None
             fig.add_trace(go.Scatter(
                 x=df[time], y=df[values[i]],
                 hoverinfo='x+y',
                 mode='lines+markers+text',
-                text=[str(round(i, 0))+unit for i in df[values[i]]],
+                text=text,
                 name=legend[i],
                 textposition='top left',
                 line=dict(width=0.5),
@@ -368,7 +420,7 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def scatterplot(self, values: list, size=None, color=None, hover_name=None, width=600, height=450, title='Scatter chart'):
+    def scatterplot(self, values: list, size: str=None, color: str=None, hover_name: str=None, width: int=600, height :int=450, title: str='Scatter chart') -> object:
         """This method will plot a scatter plot with the following parameters provided:
 
         Args:
@@ -391,8 +443,8 @@ class EDA:
 
         return fig
 
-    def facetgrid(self, categories: str, values: str, facet_row: str, facet_col: str, color=None,
-                  aggfunc='mean', barmode='stack', width=600, height=450, title='Facetgrid'):
+    def facetgrid(self, categories: str, values: str, facet_row: str, facet_col: str, color: str=None, sort_by: str=None, ascending: bool=True,
+                  aggfunc: str='mean', barmode: str='stack', width: int=600, height: int=450, title: str='Facetgrid') -> object:        
         """This method will plot the facet grid with the following arguments provided:
 
         Args:
@@ -401,6 +453,8 @@ class EDA:
             facet_row (_type_): Name of the column to be plotted as a facet row.
             facet_col (_type_): Name of the column to be plotted as a facet column.
             color (str, optional): Name of the column to differentiate data points on color. Defaults to None.
+            sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
+            ascending (bool, optional): Sorting order. Defaults to True.
             aggfunc (str, optional): Aggregation function. Defaults to 'mean'.
             barmode (str, optional): Chart could be plotted with the stack of group of bars. Defaults to 'stack'.
             width (int, optional): Width of the plot. Defaults to 600.
@@ -413,6 +467,8 @@ class EDA:
         cols_list = [categories]+[color]+[facet_col]+[facet_row]+[values]
         df = self.df.groupby(cols_list[:-1], as_index=False)\
             .agg(aggfunc, numeric_only=True)[cols_list]
+        if sort_by:
+            df = df.sort_values(sort_by, ascending = ascending)
         fig = px.bar(df, x=categories, y=values, color=color, barmode=barmode,
                      facet_row=facet_row, facet_col=facet_col,
                      category_orders={facet_row: df[facet_row].tolist(),
@@ -421,12 +477,13 @@ class EDA:
                           height=height, title=title)
         return fig
 
-    def pareto_chart(self, categories: str, values: str, unit=None,  y_label=None, width=600, height=500, title='Pareto Chart'):
+    def pareto_chart(self, categories: str, values: str, data_labels: bool=True, unit: str=None,  y_label: str=None, width: int=600, height: int=500, title: str='Pareto Chart') -> object:       
         """This method will plot a pareto chart with the following arguments provided:
 
         Args:
             categories (str): Categorical column name.
             values (str): Numerical column name.
+            data_labels (bool, optional): Show data labels. Defaults to True.
             unit (str, optional): Unit of measurement to plot with data labels. Defaults to None.
             y_label (str, optional): A custom name for the y-label. Defaults to None.
             width (int, optional): Width of the plot. Defaults to 600.
@@ -445,20 +502,28 @@ class EDA:
         df = self.df.groupby([categories], as_index=False).agg(
             "sum", numeric_only=True)[[categories]+[values]]
         df.sort_values(by=values, ascending=False, inplace=True)
+        
+        df["cumulative_%"] = 100 * (df[values].cumsum() / df[values].sum())
+
+        if data_labels:
+            trace0_text = [str(int(i))+unit for i in df[values]]
+            trace1_text = [str(round(i, 0))+"%" for i in df['cumulative_%']]
+        else: 
+            trace0_text = None
+            trace1_text = None
         trace_0 = go.Bar(
             x=df[categories],
             y=df[values],
             marker=dict(color=df[values], coloraxis="coloraxis"),
-            text=[str(int(i))+unit for i in df[values]],
+            text=trace0_text,
             textposition='auto'
         )
 
-        df["cumulative_%"] = 100 * (df[values].cumsum() / df[values].sum())
 
         trace_1 = go.Scatter(
             x=df[categories],
             y=df["cumulative_%"],
-            text=[str(round(i, 0))+"%" for i in df['cumulative_%']],
+            text=trace1_text,
             mode="lines+markers+text",
             textposition="top left"
         )
