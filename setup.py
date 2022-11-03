@@ -9,7 +9,7 @@ USERNAME = "Hassi34"
 setuptools.setup(
     name=f"{PROJECT_NAME}",
     include_package_data = True,
-    version="0.0.9.post2",
+    version="0.0.9.post3",
     license='MIT',
     author= "Hasanain Mehmood",
     author_email="hasanain@aicaliber.com",
