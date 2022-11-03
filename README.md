@@ -8,7 +8,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Python Version](https://img.shields.io/pypi/pyversions/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Downloads](https://static.pepy.tech/personalized-badge/vizpool?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/vizpool)
-[![Last Commit](https://img.shields.io/github/last-commit/hassi34/vizpool/main)](https://github.com/hassi34/vizpool)
+[![Last Commit](https://img.shields.io/github/last-commit/hassi34/vizpool/main?color=g)](https://github.com/hassi34/vizpool)
 [![License](https://img.shields.io/github/license/hassi34/vizpool?color=g)](https://pypi.org/project/vizpool)
 [![Issue Tracking](https://img.shields.io/badge/issue_tracking-github-brightgreen.svg)](https://github.com/hassi34/vizpool/issues)
 [![Open Issues](https://img.shields.io/github/issues/hassi34/vizpool)](https://github.com/hassi34/vizpool/issues) 

@@ -11,7 +11,7 @@ from plotly.subplots import make_subplots
 
 
 class EDA:
-    """This class have all the methods to perform complete Exploratory Data Analysis(EDA) on
+    """This class has all the methods to perform complete Exploratory Data Analysis(EDA) on
        any Pandas dataframe passed as an argument on class initialization.
 
     Attributes:
@@ -105,7 +105,7 @@ class EDA:
         return fig
 
     def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True,
-                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", text_color: str='white', title: str=None) -> object:
+                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", text_color: str='white', width: int=600, height: int=450, title: str=None) -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
         Args:
@@ -119,6 +119,8 @@ class EDA:
             texposition (str, optional): Position of the text labels on the plot. Defaults to 'inside'.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
             text_color (str, optional): Color of text. Defaults to 'white'.
+            width (int, optional): Width of the plot. Defaults to 600.
+            height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the plot. Defaults to None.
 
         Returns:
@@ -144,8 +146,7 @@ class EDA:
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
         fig = go.Figure(data=data)
-        fig.update_layout(barmode=barmode)
-        fig.update_layout(autosize=False, width=600, height=500, title=title)
+        fig.update_layout(barmode=barmode, autosize=False, width=width, height=height, title=title)
         return fig
 
     def piechart(self, categories: str, values: str, width: int=600, height: int=500, title: str='Pie Chart') -> object:

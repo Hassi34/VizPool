@@ -8,8 +8,10 @@ USERNAME = "Hassi34"
 
 setuptools.setup(
     name=f"{PROJECT_NAME}",
+    include_package_data = True,
     version="0.0.9.post2",
-    author= USERNAME,
+    license='MIT',
+    author= "Hasanain Mehmood",
     author_email="hasanain@aicaliber.com",
     description="A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations",
     long_description=long_description,
@@ -19,6 +21,7 @@ setuptools.setup(
         "Bug Tracker": f"https://github.com/{USERNAME}/{PROJECT_NAME}/issues",
     },
     classifiers=[
+            'Development Status :: 5 - Production/Stable',
             'Intended Audience :: Science/Research',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
