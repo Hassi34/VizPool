@@ -134,7 +134,7 @@ class EDA:
             df = df.sort_values(sort_by, ascending = ascending)
         if drop_column:
             df = df.drop(columns = [drop_column])
-            values.drop(drop_column)
+            values.remove(drop_column)
         data = []
         if orientation == 'v':
             for i in range(len(values)):
