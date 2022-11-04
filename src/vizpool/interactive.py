@@ -105,7 +105,7 @@ class EDA:
         return fig
 
     def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True,
-                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", text_color: str='white', width: int=600, height: int=450, title: str=None) -> object:
+                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", drop_column: str=None, text_color: str='white', width: int=600, height: int=450, title: str=None) -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
         Args:
@@ -118,6 +118,8 @@ class EDA:
             data_labels (bool, optional): Show data labels. Defaults to True.
             texposition (str, optional): Position of the text labels on the plot. Defaults to 'inside'.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
+            drop_column (str, optional): A column to drop from the input data. 
+                                        This could be useful for sorting the data on specific column and then droping it off. Defaults to None.
             text_color (str, optional): Color of text. Defaults to 'white'.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
@@ -130,6 +132,8 @@ class EDA:
             [categories], as_index=False).agg(aggfunc, numeric_only=True)
         if sort_by:
             df = df.sort_values(sort_by, ascending = ascending)
+        if drop_column:
+            df = df.drop(columns = [drop_column])
         data = []
         if orientation == 'v':
             for i in range(len(values)):
