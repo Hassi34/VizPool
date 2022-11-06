@@ -139,14 +139,20 @@ class EDA:
         if orientation == 'v':
             for i in range(len(values)):
                 if data_labels:
-                    text = [int(val) for val in df[values[i]]]
+                    try:
+                        text = [int(val) for val in df[values[i]]]
+                    except:
+                        text = [round(val, 0) for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], x=df[categories], y=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
         else:
             for i in range(len(values)):
                 if data_labels:
-                    text = [int(val) for val in df[values[i]]]
+                    try:
+                        text = [int(val) for val in df[values[i]]]
+                    except:
+                        text = [round(val, 0) for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
