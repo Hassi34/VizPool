@@ -104,7 +104,7 @@ class EDA:
         fig.update_xaxes(side="top", title=title)
         return fig
 
-    def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True,
+    def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True, unit: str=None,
                              data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", drop_column: str=None, text_color: str='white', width: int=600, height: int=450, title: str=None) -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
@@ -116,6 +116,7 @@ class EDA:
             sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
             ascending (bool, optional): Sorting order. Defaults to True.
             data_labels (bool, optional): Show data labels. Defaults to True.
+            unit (str, optional): Unit to be displayed with the datalabels. Defaults to None.
             texposition (str, optional): Position of the text labels on the plot. Defaults to 'inside'.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
             drop_column (str, optional): A column to drop from the input data. 
@@ -135,14 +136,20 @@ class EDA:
         if drop_column:
             df = df.drop(columns = [drop_column])
             values.remove(drop_column)
+
+        if unit == None:
+            unit = " "
+        else:
+            unit = " "+unit
+
         data = []
         if orientation == 'v':
             for i in range(len(values)):
                 if data_labels:
                     try:
-                        text = [int(val) for val in df[values[i]]]
+                        text = [str(int(val))+unit for val in df[values[i]]]
                     except:
-                        text = [round(val, 0) for val in df[values[i]]]
+                        text = [str(round(val, 0))+unit for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], x=df[categories], y=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
@@ -150,9 +157,9 @@ class EDA:
             for i in range(len(values)):
                 if data_labels:
                     try:
-                        text = [int(val) for val in df[values[i]]]
+                        text = [str(int(val))+unit for val in df[values[i]]]
                     except:
-                        text = [round(val, 0) for val in df[values[i]]]
+                        text = [str(round(val, 0))+unit for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
