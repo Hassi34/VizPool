@@ -266,24 +266,26 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
-        df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
-            val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
-            val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1])
-        )
-        df.columns = [categories]+values
-        if sort_by and  len(values) <= 2:
-            df = df.sort_values(sort_by, ascending = ascending)
-        if sort_by and len(values) > 2:
+        if len(values) == 2:
+            df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
+                val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
+                val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1])
+            )
+            df.columns = [categories]+values
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+        if len(values) > 2:
             df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
             val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
             val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1]),
             val3=pd.NamedAgg(values[2], aggfunc=aggfunc[2])
             )
             df.columns = [categories]+values
-            df = df.sort_values(sort_by, ascending = ascending)
-        if drop_column and drop_column in df.columns.tolist():
-            df = df.drop(columns = [drop_column])
-            values.remove(drop_column)
+            if sort_by:
+                df = df.sort_values(sort_by, ascending = ascending)
+            if drop_column and drop_column in df.columns.tolist():
+                df = df.drop(columns = [drop_column])
+                values.remove(drop_column)
         if data_labels:
             if round_decimal > 0:
                 line_data_labels = [round(val, round_decimal)
