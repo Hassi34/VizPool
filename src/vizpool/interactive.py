@@ -243,7 +243,7 @@ class EDA:
         return fig
 
     def bar_line(self, categories: str, values: list, aggfunc: list=['mean', 'sum'], data_labels: bool=True, sort_by: str=None, ascending: bool=True, legends: list=None,
-                width: int=600, height: int=450,title: str="Bar Line Chart", texposition: str="auto", text_color: str="white", round_decimal: int=0) -> object:
+                drop_column: str=None, width: int=600, height: int=450,title: str="Bar Line Chart", texposition: str="auto", text_color: str="white", round_decimal: int=0) -> object:
         """This method will plot a bar line chart with the following arguments provided:
 
         Args:
@@ -254,6 +254,8 @@ class EDA:
             sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
             ascending (bool, optional): Sorting order. Defaults to True.
             legends (list, optional): List containing the custom legends as elements. Defaults to None.
+            drop_column (str, optional): A column to drop from the input data. 
+                            This could be useful for sorting the data on specific column and then droping it off. Defaults to None.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the plot. Defaults to "Bar Line Chart".
@@ -271,6 +273,9 @@ class EDA:
         df.columns = [categories]+values
         if sort_by:
             df = df.sort_values(sort_by, ascending = ascending)
+        if drop_column:
+            df = df.drop(columns = [drop_column])
+            values.remove(drop_column)
         if data_labels:
             if round_decimal > 0:
                 line_data_labels = [round(val, round_decimal)
