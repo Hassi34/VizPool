@@ -71,10 +71,11 @@ class EDA:
         fig.update_layout(barmode='stack', xaxis={
             'categoryorder': 'total descending'})
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                          height=height,title=title, title_x=0.5)
         return fig
 
-    def heatmap(self, index: str, columns: str, values: str, aggfunc: str='mean', data_labels: bool=True, x_label: str=None, y_label: str=None, color_label: str=None, title: str='Heatmap') -> object:    
+    def heatmap(self, index: str, columns: str, values: str, aggfunc: str='mean', data_labels: bool=True, x_label: str=None, y_label: str=None,
+                 color_label: str=None, width: int=600, height: int=450, title: str='Heatmap') -> object:    
         """Thi method will plot a heatmap with the following arguments provided:
 
         Args:
@@ -86,6 +87,8 @@ class EDA:
             x_label (str, optional): Label for x-axis. Defaults to None.
             y_label (str, optional): Label for y-axis. Defaults to None.
             color_label (str, optional): Color of the label. Defaults to None.
+            width (int, optional): Width of the plot. Defaults to 600.
+            height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the visualization. Defaults to Heatmap.
 
         Returns:
@@ -102,10 +105,11 @@ class EDA:
                                coloraxis=None,
                                colorscale='bluered'), selector={'type': 'heatmap'})
         fig.update_xaxes(side="top", title=title)
+        fig.update_layout(autosize=False, width=width, height=height,)
         return fig
 
     def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True, unit: str=None,
-                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", drop_column: str=None, text_color: str='white', width: int=600, height: int=450, title: str=None) -> object:
+                             data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", drop_column: str=None, text_color: str='white', width: int=600, height: int=450, title: str="Stack or Group Chart") -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
         Args:
@@ -124,7 +128,7 @@ class EDA:
             text_color (str, optional): Color of text. Defaults to 'white'.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
-            title (str, optional): Title of the plot. Defaults to None.
+            title (str, optional): Title of the plot. Defaults to "Stack or Group Chart".
 
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application
@@ -164,7 +168,8 @@ class EDA:
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
         fig = go.Figure(data=data)
-        fig.update_layout(barmode=barmode, autosize=False, width=width, height=height, title=title)
+        fig.update_layout(autosize=False, width=width,
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def piechart(self, categories: str, values: str, width: int=600, height: int=500, title: str='Pie Chart') -> object:
@@ -239,7 +244,8 @@ class EDA:
         )
         fig.update_traces(mode='markers+lines+text',
                           textfont_size=12, textposition="top left")
-        fig.update_layout(autosize=False, width=width, height=height,)
+        fig.update_layout(autosize=False, width=width,
+            height=height,title=title, title_x=0.5)
         return fig
 
     def bar_line(self, categories: str, values: list, aggfunc: list=['mean', 'sum', 'max'], data_labels: bool=True, sort_by: str=None, ascending: bool=True, legends: list=None,
@@ -314,7 +320,7 @@ class EDA:
         )
         # yanchor="top",y=0.99 ,x=0.01
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def histogram(self, values: str, color: str=None, marginal: str=None, hover_data: list=None, title: str='Histogram', width: int=800, height: int=450) -> object:
@@ -335,7 +341,7 @@ class EDA:
         fig = px.histogram(self.df, x=values, y=values, color=color,
                            marginal=marginal, histfunc='count', hover_data=hover_data)
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def distplot(self, values: list, width: int=800, height: int=450, title: str='Distribution Plot') -> object:
@@ -354,10 +360,11 @@ class EDA:
         fig = ff.create_distplot(
             [df[c] for c in df.columns], df.columns, bin_size=.25)
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
         return fig
 
-    def combined_corr(self, x_values: str, y_values: str, color: str=None, hover_name: str=None, size: str=None, title: str="Combined Correlation Plot") -> object:
+    def combined_corr(self, x_values: str, y_values: str, color: str=None, hover_name: str=None, size: str=None,
+                    width: int=600, height: int=450, title: str="Combined Correlation Plot") -> object:
         """This method will plot the combined correlation plot using the following arguments:
 
         Args:
@@ -366,6 +373,8 @@ class EDA:
             color (str, optional): Name of the column to differentiate data points on color. Defaults to None.
             hover_name (str, optional): Column name to display as hover name. Defaults to None.
             size (str, optional): Name of the column to be presented as the size of the data point. Defaults to None.
+            width (int, optional): With of the plot. Defaults to 600.
+            height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the plot. Defaults to "Combined Correlation Plot".
 
         Returns:
@@ -373,7 +382,9 @@ class EDA:
         """
         fig = px.scatter(self.df, x=x_values, y=y_values, color=color,
                          marginal_x="box", marginal_y='violin', hover_name=hover_name,
-                         size=size, title=title)
+                         size=size)
+        fig.update_layout(autosize=False, width=width,
+            height=height,title=title, title_x=0.5)
         return fig
 
     def multivar_bubble_chart(self, categories: list, values: list, aggfunc: str="mean", hover_name: str=None, sort_by: str=None, ascending: bool=True,
@@ -402,8 +413,8 @@ class EDA:
                          size=df[values[1]], color=df[categories[1]],
                          hover_name=hover_name, size_max=20)
         fig.update_traces(dict(showlegend=True))
-        fig.update_layout(autosize=False, width=width, height=height,)
-        fig.update_xaxes(side="top", title=title)
+        fig.update_layout(autosize=False, width=width,
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def stacked_area_chart(self, time: str, values: list, aggfunc: str='mean', data_labels: bool=True, sort_by: str=None, ascending: bool=True,
@@ -464,7 +475,7 @@ class EDA:
             ))
 
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def scatterplot(self, values: list, size: str=None, color: str=None, hover_name: str=None, width: int=600, height :int=450, title: str='Scatter chart') -> object:
@@ -486,7 +497,7 @@ class EDA:
                          size=size, color=color,
                          hover_name=hover_name)
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
 
         return fig
 
@@ -521,7 +532,7 @@ class EDA:
                      category_orders={facet_row: df[facet_row].tolist(),
                                       facet_col: df[facet_col].tolist()})
         fig.update_layout(autosize=False, width=width,
-                          height=height, title=title)
+                    height=height,title=title, title_x=0.5)
         return fig
 
     def pareto_chart(self, categories: str, values: str, data_labels: bool=True, unit: str=None,  y_label: str=None, width: int=600, height: int=500, title: str='Pareto Chart') -> object:       
@@ -583,6 +594,7 @@ class EDA:
 
         fig.update_layout(
             title=title,
+            title_x=0.5,
             autosize=False,
             width=width, height=height,
             yaxis={"title": y_label},
