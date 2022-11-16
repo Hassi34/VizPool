@@ -277,11 +277,11 @@ class EDA:
             df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
             val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
             val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1]),
-            val2=pd.NamedAgg(values[2], aggfunc=aggfunc[2])
+            val3=pd.NamedAgg(values[2], aggfunc=aggfunc[2])
             )
             df.columns = [categories]+values
             df = df.sort_values(sort_by, ascending = ascending)
-        if drop_column:
+        if drop_column and drop_column in df.columns.tolist():
             df = df.drop(columns = [drop_column])
             values.remove(drop_column)
         if data_labels:
