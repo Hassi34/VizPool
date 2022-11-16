@@ -168,7 +168,7 @@ class EDA:
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
         fig = go.Figure(data=data)
-        fig.update_layout(autosize=False, width=width,
+        fig.update_layout(barmode=barmode, autosize=False, width=width,
                     height=height,title=title, title_x=0.5)
         return fig
 
