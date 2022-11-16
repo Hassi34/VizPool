@@ -242,14 +242,14 @@ class EDA:
         fig.update_layout(autosize=False, width=width, height=height,)
         return fig
 
-    def bar_line(self, categories: str, values: list, aggfunc: list=['mean', 'sum'], data_labels: bool=True, sort_by: str=None, ascending: bool=True, legends: list=None,
+    def bar_line(self, categories: str, values: list, aggfunc: list=['mean', 'sum', 'max'], data_labels: bool=True, sort_by: str=None, ascending: bool=True, legends: list=None,
                 drop_column: str=None, width: int=600, height: int=450,title: str="Bar Line Chart", texposition: str="auto", text_color: str="white", round_decimal: int=0) -> object:
         """This method will plot a bar line chart with the following arguments provided:
 
         Args:
             categories (str): Name of the categorical column.
             values (list): A list of the names of numerical columns.
-            aggfunc (list, optional): List of aggregation functions. Defaults to ['mean','sum'].
+            aggfunc (list, optional): List of aggregation functions. Defaults to ['mean', 'sum', 'max'].
             data_labels (bool, optional): Show data labels. Defaults to True.
             sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
             ascending (bool, optional): Sorting order. Defaults to True.
@@ -271,7 +271,15 @@ class EDA:
             val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1])
         )
         df.columns = [categories]+values
-        if sort_by:
+        if sort_by and  len(values) <= 2:
+            df = df.sort_values(sort_by, ascending = ascending)
+        if sort_by and len(values) > 2:
+            df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
+            val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
+            val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1]),
+            val2=pd.NamedAgg(values[2], aggfunc=aggfunc[2])
+            )
+            df.columns = [categories]+values
             df = df.sort_values(sort_by, ascending = ascending)
         if drop_column:
             df = df.drop(columns = [drop_column])
