@@ -233,7 +233,10 @@ class EDA:
                 unit = " "
             else:
                 unit = " "+unit
-            text = [str(int(val))+unit for val in df[values]]
+            try:
+                text = [str(int(val))+unit for val in df[values]]
+            except ValueError:
+                text = [str(round(float(val),0))+unit for val in df[values]]
         else: text = None
 
         fig = px.area(

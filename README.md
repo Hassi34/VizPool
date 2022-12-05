@@ -4,7 +4,7 @@
     </b>
 </p>
 <p align="center">
-    <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations</em>
+    <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Data Visualization</em>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@
 </p>
 
 ## Overview
-VizPool enables you to create impressive static and interactive visuals with just one line of code. You will be introduced to a number of class methods to choose from. You can call these methods with specific keyword or positional arguments to generate amazing static and interactive visuals.<br>
+VizPool enables you to create impressive static and interactive visuals with just one line of code while also providing the higher standards of customization. You will be introduced to a number of class methods to choose from. You can call these methods with specific keyword or positional arguments to generate amazing static and interactive visuals.<br>
 Following are the major contents to follow, you can jump to any section:
 
 >   1. [Installation](#install-)
