@@ -221,11 +221,14 @@ class EDA:
             .agg(aggfunc, numeric_only=True)[[categories]+[values]]
             if sort_by:
                 df = df.sort_values(sort_by, ascending = ascending)
-        elif sort_by is not None:
-            df = self.df.groupby(categories, as_index=False)\
-            .agg(aggfunc, numeric_only=True)[[categories]+[values]+[sort_by]]
-            if sort_by:
-                df = df.sort_values(sort_by, ascending = ascending)
+
+        elif (sort_by != values) & (sort_by is not None):
+            df = self.df[[categories]+values].groupby(categories, as_index=False).agg(
+            value=pd.NamedAgg(values, aggfunc=aggfunc),
+            sort_by=pd.NamedAgg(sort_by, aggfunc=pd.Series.mode)
+            ).sort_values(sort_by, ascending = ascending)
+            df.columns = [categories]+ [values] + [sort_by]
+            
         else:
             df = self.df.groupby(categories, as_index=False)\
                 .agg(aggfunc, numeric_only=True)[[categories]+[values]]
