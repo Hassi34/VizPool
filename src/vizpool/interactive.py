@@ -108,7 +108,7 @@ class EDA:
         fig.update_layout(autosize=False, width=width, height=height,)
         return fig
 
-    def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True, unit: str=None,
+    def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True, unit: str=None, unit_position : str="after",
                              data_labels: bool=True, texposition: str='inside', aggfunc: str="mean", drop_column: str=None, text_color: str='white', width: int=600, height: int=450, title: str="Stack or Group Chart") -> object:
         """This method will plot a stack or group chart using the following arguments provided:
 
@@ -121,6 +121,7 @@ class EDA:
             ascending (bool, optional): Sorting order. Defaults to True.
             data_labels (bool, optional): Show data labels. Defaults to True.
             unit (str, optional): Unit to be displayed with the datalabels. Defaults to None.
+            unit_position (str, optional): Position of the units of data labels, which could be before or after the label values. Defaults to 'after'.
             texposition (str, optional): Position of the text labels on the plot. Defaults to 'inside'.
             aggfunc (str, optional): Aggregation function. Defaults to "mean".
             drop_column (str, optional): A column to drop from the input data. 
@@ -151,9 +152,9 @@ class EDA:
             for i in range(len(values)):
                 if data_labels:
                     try:
-                        text = [str(int(val))+unit for val in df[values[i]]]
-                    except:
-                        text = [str(round(val, 0))+unit for val in df[values[i]]]
+                        text = [str(int(val))+unit if unit_position == 'after' else unit+' '+str(int(val)) for val in df[values[i]]]
+                    except ValueError:
+                        text = [str(round(float(val),0))+unit if unit_position == 'after' else unit+' '+str(round(float(val),0)) for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], x=df[categories], y=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
@@ -161,9 +162,9 @@ class EDA:
             for i in range(len(values)):
                 if data_labels:
                     try:
-                        text = [str(int(val))+unit for val in df[values[i]]]
-                    except:
-                        text = [str(round(val, 0))+unit for val in df[values[i]]]
+                        text = [str(int(val))+unit if unit_position == 'after' else unit+' '+str(int(val)) for val in df[values[i]]]
+                    except ValueError:
+                        text = [str(round(float(val),0))+unit if unit_position == 'after' else unit+' '+str(round(float(val),0)) for val in df[values[i]]]
                 else: text = None
                 data.append(go.Bar(name=values[i], y=df[categories], x=df[values[i]], orientation=orientation,
                                    text=text, textposition=texposition, textfont=dict(color=text_color),))
@@ -196,7 +197,7 @@ class EDA:
         return fig
 
     def area_chart(self, categories: str, values: str, aggfunc: str='mean', data_labels: bool=True, sort_by: str=None, ascending: bool=True,
-                    unit: str=None, width: int=600, height: int=450,  title: str="Area Chart") -> object:
+                    unit: str=None, unit_position : str="after", width: int=600, height: int=450,  title: str="Area Chart") -> object:
         """This method will plot the area chart with the following arguments provided:
 
         Args:
@@ -207,6 +208,7 @@ class EDA:
             sort_by (str, optional): Name of the column to sort the data on. Defaults to None.
             ascending (bool, optional): Sorting order. Defaults to True.
             unit (str, optional): Unit to be displayed with the datalabels. Defaults to None.
+            unit_position (str, optional): Position of the units of data labels, which could be before or after the label values. Defaults to 'after'.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 450.
             title (str, optional): Title of the plot. Defaults to "Area Chart".
@@ -234,9 +236,9 @@ class EDA:
             else:
                 unit = " "+unit
             try:
-                text = [str(int(val))+unit for val in df[values]]
+                text = [str(int(val))+unit if unit_position == 'after' else unit+' '+str(int(val)) for val in df[values]]
             except ValueError:
-                text = [str(round(float(val),0))+unit for val in df[values]]
+                text = [str(round(float(val),0))+unit if unit_position == 'after' else unit+' '+str(round(float(val),0)) for val in df[values]]
         else: text = None
 
         fig = px.area(
@@ -538,7 +540,8 @@ class EDA:
                     height=height,title=title, title_x=0.5)
         return fig
 
-    def pareto_chart(self, categories: str, values: str, data_labels: bool=True, unit: str=None,  y_label: str=None, width: int=600, height: int=500, title: str='Pareto Chart') -> object:       
+    def pareto_chart(self, categories: str, values: str, data_labels: bool=True, unit: str=None, unit_position : str="after",
+                      y_label: str=None, width: int=600, height: int=500, title: str='Pareto Chart') -> object:       
         """This method will plot a pareto chart with the following arguments provided:
 
         Args:
@@ -546,6 +549,7 @@ class EDA:
             values (str): Numerical column name.
             data_labels (bool, optional): Show data labels. Defaults to True.
             unit (str, optional): Unit of measurement to plot with data labels. Defaults to None.
+            unit_position (str, optional): Position of the units of data labels, which could be before or after the label values. Defaults to 'after'.
             y_label (str, optional): A custom name for the y-label. Defaults to None.
             width (int, optional): Width of the plot. Defaults to 600.
             height (int, optional): Height of the plot. Defaults to 500.
@@ -567,7 +571,11 @@ class EDA:
         df["cumulative_%"] = 100 * (df[values].cumsum() / df[values].sum())
 
         if data_labels:
-            trace0_text = [str(int(i))+unit for i in df[values]]
+            try:
+                trace0_text = [str(int(val))+unit if unit_position == 'after' else unit+' '+str(int(val)) for val in df[values]]
+            except ValueError:
+                trace0_text = [str(round(float(val),0))+unit if unit_position == 'after' else unit+' '+str(round(float(val),0)) for val in df[values]]
+
             trace1_text = [str(round(i, 0))+"%" for i in df['cumulative_%']]
         else: 
             trace0_text = None
