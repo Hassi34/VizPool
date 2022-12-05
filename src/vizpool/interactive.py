@@ -223,9 +223,9 @@ class EDA:
                 df = df.sort_values(sort_by, ascending = ascending)
 
         elif (sort_by != values) & (sort_by is not None):
-            df = self.df.groupby(categories, as_index=False).agg(
+            df = self.df[[categories, values, sort_by]].groupby(categories, as_index=False).agg(
             value=pd.NamedAgg(values, aggfunc=aggfunc),
-            sort_by=pd.NamedAgg(sort_by, aggfunc=pd.Series.mode)
+            sort_col=pd.NamedAgg(sort_by, aggfunc=pd.Series.mode)
             ).sort_values(sort_by, ascending = ascending)
             df.columns = [categories]+ [values] + [sort_by]
             
