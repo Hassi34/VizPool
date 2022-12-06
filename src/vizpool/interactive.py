@@ -225,8 +225,8 @@ class EDA:
         elif (sort_by != values) & (sort_by is not None):
             df = self.df[[categories, values, sort_by]].groupby(categories, as_index=False).agg(
             value=pd.NamedAgg(values, aggfunc=aggfunc),
-            sort_col=pd.NamedAgg(sort_by, aggfunc=pd.Series.mode)
-            ).sort_values(sort_by, ascending = ascending)
+            month_no=pd.NamedAgg(sort_by, aggfunc=pd.Series.mode)
+            ).sort_values("month_no", ascending = ascending)
             df.columns = [categories]+ [values] + [sort_by]
             
         else:
