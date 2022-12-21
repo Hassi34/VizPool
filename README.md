@@ -4,7 +4,7 @@
     </b>
 </p>
 <p align="center">
-    <em>A Python Library with Low-Code support for Basic to Advance Static & Interactive Data Visualization</em>
+    <em>A Python Library Having Low-Code Support for Basic to Advance Static & Interactive Data Visualization</em>
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@
         <img alt="Open Issues" src="https://img.shields.io/github/issues/hassi34/vizpool">
     </a>
     <a href="https://pypi.org/project/vizpool">
-        <img alt="Github Actions Status" src="https://img.shields.io/github/workflow/status/hassi34/vizpool/Publish%20Python%20distributions%20to%20PyPI%20and%20TestPyPI?event=push">
+        <img alt="Github Actions Status" src="https://img.shields.io/github/actions/workflow/status/hassi34/vizpool/cicd.yml?branch=main">
     </a>
     <a href="https://pypi.org/project/vizpool">
         <img alt="Code Size" src="https://img.shields.io/github/languages/code-size/hassi34/vizpool?color=g">
