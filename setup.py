@@ -41,7 +41,7 @@ setuptools.setup(
         "numpy >= 1.26.4",
         "pandas >= 2.2.1",
         "seaborn >= 0.13.2",
-        "scikit-learn==1.3.1",
+        "scikit-learn==1.3.0",
         "kaleido==0.2.1"
     ]
 )   
