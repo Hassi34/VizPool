@@ -47,7 +47,8 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application
         """
-        df = self.df.groupby([categories], as_index=False).agg(
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
+        df = self.df.groupby([categories], as_index=False, observed=False).agg(
             value=pd.NamedAgg(values, aggfunc=aggfunc)
         )
         df.columns = [categories, values]
@@ -94,8 +95,9 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in pivot_table
         df_pivot = self.df[[index, columns, values]].pivot_table(
-            index=index, columns=columns, aggfunc=aggfunc, fill_value=0)
+            index=index, columns=columns, aggfunc=aggfunc, fill_value=0,observed=False)
         fig = px.imshow(df_pivot.values,
                         labels=dict(x=x_label, y=y_label, color=color_label),
                         x=[x[1] for x in df_pivot.columns],
@@ -105,7 +107,7 @@ class EDA:
                                coloraxis=None,
                                colorscale='bluered'), selector={'type': 'heatmap'})
         fig.update_xaxes(side="top", title=title)
-        fig.update_layout(autosize=False, width=width, height=height,)
+        fig.update_layout(autosize=False, width=width, height=height, )
         return fig
 
     def stack_or_group_chart(self, categories: str, values: list, barmode: str="stack", orientation: str='v', sort_by: str=None, ascending: bool=True, unit: str=None, unit_position : str="after",
@@ -134,8 +136,9 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         df = self.df[[categories]+values].groupby(
-            [categories], as_index=False).agg(aggfunc, numeric_only=True)
+            [categories], as_index=False, observed=False).agg(aggfunc, numeric_only=True)
         if sort_by:
             df = df.sort_values(sort_by, ascending = ascending)
         if drop_column:
@@ -216,6 +219,7 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         if sort_by == values:
             df = self.df.groupby(categories, as_index=False)\
             .agg(aggfunc, numeric_only=True)[[categories]+[values]]
@@ -230,7 +234,7 @@ class EDA:
             df.columns = [categories]+ [values] + [sort_by]
             
         else:
-            df = self.df.groupby(categories, as_index=False)\
+            df = self.df.groupby(categories, as_index=False, observed=False)\
                 .agg(aggfunc, numeric_only=True)[[categories]+[values]]
 
         if data_labels:
@@ -280,8 +284,9 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         if len(values) == 2:
-            df = self.df[[categories]+values].groupby([categories], as_index=False).agg(
+            df = self.df[[categories]+values].groupby([categories], as_index=False, observed=False).agg(
                 val1=pd.NamedAgg(values[0], aggfunc=aggfunc[0]),
                 val2=pd.NamedAgg(values[1], aggfunc=aggfunc[1])
             )
@@ -413,7 +418,8 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
-        df = self.df.groupby(categories, as_index=False).agg(
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
+        df = self.df.groupby(categories, as_index=False, observed=False).agg(
             aggfunc, numeric_only=True)[categories+values]
         if sort_by:
             df = df.sort_values(sort_by, ascending = ascending)
@@ -445,8 +451,9 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         if sort_by in values:
-            df = self.df.groupby(time, as_index=False)\
+            df = self.df.groupby(time, as_index=False, observed=False)\
             .agg(aggfunc, numeric_only=True)[[time]+values]
             if sort_by:
                 df = df.sort_values(sort_by, ascending = ascending)
@@ -530,8 +537,9 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         cols_list = [categories]+[color]+[facet_col]+[facet_row]+[values]
-        df = self.df.groupby(cols_list[:-1], as_index=False)\
+        df = self.df.groupby(cols_list[:-1], as_index=False, observed=False)\
             .agg(aggfunc, numeric_only=True)[cols_list]
         if sort_by:
             df = df.sort_values(sort_by, ascending = ascending)
@@ -561,13 +569,14 @@ class EDA:
         Returns:
             fig(object): An Object which can be used to save or plot charts in any python application.
         """
+        #The default of observed=False is deprecated and will be changed to True in a future version of pandas so add argument observed = False in groupby
         if y_label is None:
             y_label = values
         if unit == None:
             unit = " "
         else:
             unit = " "+unit
-        df = self.df.groupby([categories], as_index=False).agg(
+        df = self.df.groupby([categories], as_index=False, observed=False).agg(
             "sum", numeric_only=True)[[categories]+[values]]
         df.sort_values(by=values, ascending=False, inplace=True)
         
