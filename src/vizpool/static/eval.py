@@ -138,10 +138,17 @@ class Evaluation:
 
         fig = plt.figure(figsize=(width, height))
         plt.subplot(1, 2, 1)
+
+        # sns.barplot(y="columns",
+        #             x="weight",
+        #             data=weights_df.head(30),
+        #             palette=weights_df.head(30)["colors"])
+
         sns.barplot(y="columns",
                     x="weight",
+                    hue="columns",
                     data=weights_df.head(30),
-                    palette=weights_df.head(30)["colors"])
+                    palette=weights_df.head(30)["colors"].tolist(), legend=False)
         plt.yticks(rotation=45)
         plt.ylabel("Feature Name", fontsize=12)
         plt.xlabel("Feature Importance", fontsize=10)
