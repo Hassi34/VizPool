@@ -13,7 +13,7 @@ setuptools.setup(
     license='MIT',
     author= "Hasanain Mehmood",
     author_email="hasanain@aicaliber.com",
-    description="A Python Library with Low-Code support for Basic to Advance Static & Interactive Visualizations",
+    description="A Python Library with Low-Code support for Basic to Advance Static & Interactive Data Visualizations",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=f"https://github.com/{USERNAME}/{PROJECT_NAME}",
