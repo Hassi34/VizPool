@@ -40,7 +40,7 @@ setuptools.setup(
         "plotly >= 5.19.0",
         "numpy >= 1.22",
         "pandas >= 1.2.0",
-        "seaborn >= 0.13.2",
+        "seaborn >= 0.12.2",
         "scikit-learn >= 1.3.1",
         "kaleido==0.2.1"
         ]
