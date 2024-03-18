@@ -9,7 +9,7 @@ USERNAME = "Hassi34"
 setuptools.setup(
     name=f"{PROJECT_NAME}",
     include_package_data = True,
-    version="0.0.12.post1",
+    version="0.0.12.post2",
     license='MIT',
     author= "Hasanain Mehmood",
     author_email="hasanain@aicaliber.com",
@@ -38,7 +38,7 @@ setuptools.setup(
     python_requires=">=3.7",
     install_requires = [
         "plotly >= 5.19.0",
-        "numpy >= 1.26.4",
+        "numpy >= 1.22",
         "pandas >= 2.2.1",
         "seaborn >= 0.13.2",
         "scikit-learn >= 1.3.1",
