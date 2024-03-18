@@ -27,6 +27,8 @@ setuptools.setup(
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Programming Language :: Python :: 3.10',
+            'Programming Language :: Python :: 3.11',
+            'Programming Language :: Python :: 3.12',
             'License :: OSI Approved :: MIT License',
             'Topic :: Scientific/Engineering :: Visualization',
             'Operating System :: OS Independent'
@@ -39,7 +41,7 @@ setuptools.setup(
         "numpy >= 1.22.4",
         "pandas >= 1.3.5",
         "seaborn >= 0.11.1",
-        "scikit-learn==1.1.2",
+        "scikit-learn >= 1.1.2",
         "kaleido==0.0.3"
     ]
 )   
