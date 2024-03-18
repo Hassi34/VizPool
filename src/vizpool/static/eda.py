@@ -135,7 +135,8 @@ class EDA:
             columns_len = len(num_cols)
         data_n_2 = (X - X.mean()) / (X.std())
         data = pd.concat([y, data_n_2.iloc[:, 0:columns_len]], axis=1)
-        data = data.fillna(method='ffill')
+        #warning message to deprecated the use of data = data.fillna(method='ffill') 
+        data = data.ffill()
         data = pd.melt(data, id_vars=y.name,
                        var_name="features",
                        value_name='value')
@@ -210,7 +211,7 @@ class EDA:
         plt.tight_layout()
         return plt
 
-    def pairplot(self, hue: str, width=25, height=15) -> object:
+    def pairplot(self, hue: str, width=30, height=20) -> object:
         """This method will plot the pair plot with the following arguments provided:
 
         Args:
@@ -223,7 +224,9 @@ class EDA:
         """
         sns.set(font_scale=1)
         plt.figure(figsize=(width, height))
-        sns.pairplot(data=self.df, hue=hue)
+        #warnning message for tight layout image
+        g = sns.pairplot(data=self.df, hue=hue)
+        g.fig.tight_layout()
         return plt
 
     def barplot(self, y: str, hue=None, col_to_plot='default', estimator='mean', width=15, height=8) -> object:
